@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+{% block title %}Analytics | MozhiMate{% endblock %}
+{% block content %}
+<section class="page-header premium-page-hero compact-hero compact-copy-hero">
+    <div>
+        <h1 class="page-title-small">Analytics Dashboard</h1>
+    </div>
+</section>
+
+<section class="stats-grid premium-stats-grid">
+    <div class="stat-card premium-stat-card"><span>Total Words Learned</span><strong>{{ analytics.total_words }}</strong></div>
+    <div class="stat-card premium-stat-card"><span>Time Spent</span><strong>{{ analytics.time_spent_minutes }} min</strong></div>
+    <div class="stat-card premium-stat-card"><span>Quiz Accuracy</span><strong>{{ analytics.quiz_accuracy }}%</strong></div>
+    <div class="stat-card premium-stat-card"><span>Mastered Words</span><strong>{{ analytics.mastered_words }}</strong></div>
+</section>
+
+{% set easy = analytics.difficulty_distribution.get('Easy', 0) %}
+{% set medium = analytics.difficulty_distribution.get('Medium', 0) %}
+{% set hard = analytics.difficulty_distribution.get('Hard', 0) %}
+{% set total = analytics.total_words if analytics.total_words else 1 %}
+{% set easy_pct = (easy / total * 100) | round(1) %}
+{% set medium_pct = (medium / total * 100) | round(1) %}
+{% set hard_pct = (hard / total * 100) | round(1) %}
+{% set medium_offset = easy_pct %}
+{% set hard_offset = easy_pct + medium_pct %}
+{% set quiz_total = analytics.quiz_attempts if analytics.quiz_attempts else 1 %}
+{% set correct_pct = (analytics.quiz_correct / quiz_total * 100) | round(1) %}
+{% set incorrect_pct = (analytics.quiz_incorrect / quiz_total * 100) | round(1) %}
+
+<section class="two-column analytics-layout analytics-layout-balanced">
+    <div class="panel premium-panel analytics-panel">
+        <div class="panel-heading compact-heading">
+            <h2>Difficulty Distribution</h2>
+            <span class="muted">Where your effort is going</span>
+        </div>
+
+        <div class="analytics-donut-layout">
+            <div class="analytics-donut-wrap">
+                <div class="analytics-donut-card">
+                    <svg class="analytics-donut-svg" viewBox="0 0 120 120" aria-label="Difficulty distribution donut chart">
+                        <circle class="analytics-ring-base" cx="60" cy="60" r="48" pathLength="100"></circle>
+                        <circle class="analytics-ring-segment easy analytics-hover-target" cx="60" cy="60" r="48" pathLength="100" style="--segment: {{ easy_pct }}; --offset: 0;" data-tooltip-title="Easy" data-tooltip-value="{{ easy }} words" data-tooltip-meta="{{ easy_pct }}% of total"></circle>
+                        <circle class="analytics-ring-segment medium analytics-hover-target" cx="60" cy="60" r="48" pathLength="100" style="--segment: {{ medium_pct }}; --offset: {{ medium_offset }};" data-tooltip-title="Medium" data-tooltip-value="{{ medium }} words" data-tooltip-meta="{{ medium_pct }}% of total"></circle>
+                        <circle class="analytics-ring-segment hard analytics-hover-target" cx="60" cy="60" r="48" pathLength="100" style="--segment: {{ hard_pct }}; --offset: {{ hard_offset }};" data-tooltip-title="Hard" data-tooltip-value="{{ hard }} words" data-tooltip-meta="{{ hard_pct }}% of total"></circle>
+                    </svg>
+                    <div class="analytics-donut-center">
+                        <strong>{{ analytics.total_words }}</strong>
+                        <span>Total Words</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="analytics-legend">
+                <div class="analytics-legend-card easy analytics-hover-target" data-tooltip-title="Easy" data-tooltip-value="{{ easy }} words" data-tooltip-meta="{{ easy_pct }}% of total">
+                    <div class="analytics-legend-top"><span class="legend-dot"></span><span class="legend-label">Easy</span></div>
+                    <strong>{{ easy }}</strong>
+                    <small>{{ easy_pct }}%</small>
+                </div>
+                <div class="analytics-legend-card medium analytics-hover-target" data-tooltip-title="Medium" data-tooltip-value="{{ medium }} words" data-tooltip-meta="{{ medium_pct }}% of total">
+                    <div class="analytics-legend-top"><span class="legend-dot"></span><span class="legend-label">Medium</span></div>
+                    <strong>{{ medium }}</strong>
+                    <small>{{ medium_pct }}%</small>
+                </div>
+                <div class="analytics-legend-card hard analytics-hover-target" data-tooltip-title="Hard" data-tooltip-value="{{ hard }} words" data-tooltip-meta="{{ hard_pct }}% of total">
+                    <div class="analytics-legend-top"><span class="legend-dot"></span><span class="legend-label">Hard</span></div>
+                    <strong>{{ hard }}</strong>
+                    <small>{{ hard_pct }}%</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel premium-panel analytics-panel">
+        <div class="panel-heading compact-heading">
+            <h2>Quiz Accuracy Scores</h2>
+            <span class="muted">Correct vs incorrect answers</span>
+        </div>
+
+        <div class="analytics-donut-layout quiz-accuracy-layout">
+            <div class="analytics-donut-wrap">
+                <div class="analytics-donut-card quiz-accuracy-card">
+                    <svg class="analytics-donut-svg" viewBox="0 0 120 120" aria-label="Quiz accuracy donut chart">
+                        <circle class="analytics-ring-base" cx="60" cy="60" r="48" pathLength="100"></circle>
+                        <circle class="analytics-ring-segment easy analytics-hover-target" cx="60" cy="60" r="48" pathLength="100" style="--segment: {{ correct_pct }}; --offset: 0;" data-tooltip-title="Correct" data-tooltip-value="{{ analytics.quiz_correct }} answers" data-tooltip-meta="{{ correct_pct }}% of attempts"></circle>
+                        <circle class="analytics-ring-segment hard analytics-hover-target" cx="60" cy="60" r="48" pathLength="100" style="--segment: {{ incorrect_pct }}; --offset: {{ correct_pct }};" data-tooltip-title="Incorrect" data-tooltip-value="{{ analytics.quiz_incorrect }} answers" data-tooltip-meta="{{ incorrect_pct }}% of attempts"></circle>
+                    </svg>
+                    <div class="analytics-donut-center">
+                        <strong>{{ analytics.quiz_accuracy }}%</strong>
+                        <span>Accuracy</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="analytics-legend">
+                <div class="analytics-legend-card easy analytics-hover-target" data-tooltip-title="Correct" data-tooltip-value="{{ analytics.quiz_correct }} answers" data-tooltip-meta="{{ correct_pct }}% of attempts">
+                    <div class="analytics-legend-top"><span class="legend-dot"></span><span class="legend-label">Correct</span></div>
+                    <strong>{{ analytics.quiz_correct }}</strong>
+                    <small>{{ correct_pct }}%</small>
+                </div>
+                <div class="analytics-legend-card hard analytics-hover-target" data-tooltip-title="Incorrect" data-tooltip-value="{{ analytics.quiz_incorrect }} answers" data-tooltip-meta="{{ incorrect_pct }}% of attempts">
+                    <div class="analytics-legend-top"><span class="legend-dot"></span><span class="legend-label">Incorrect</span></div>
+                    <strong>{{ analytics.quiz_incorrect }}</strong>
+                    <small>{{ incorrect_pct }}%</small>
+                </div>
+                <div class="analytics-legend-card medium analytics-hover-target" data-tooltip-title="Attempts" data-tooltip-value="{{ analytics.quiz_attempts }} total attempts" data-tooltip-meta="Across all revision quizzes">
+                    <div class="analytics-legend-top"><span class="legend-dot"></span><span class="legend-label">Attempts</span></div>
+                    <strong>{{ analytics.quiz_attempts }}</strong>
+                    <small>Total quiz tries</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div id="analytics-tooltip" class="analytics-tooltip hidden" aria-hidden="true">
+    <strong class="analytics-tooltip-title"></strong>
+    <span class="analytics-tooltip-value"></span>
+    <small class="analytics-tooltip-meta"></small>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/analytics.js') }}"></script>
+{% endblock %}

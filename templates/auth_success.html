@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Welcome | MozhiMate{% endblock %}
+{% block content %}
+<section class="auth-layout success-layout">
+    <div class="auth-card success-card">
+        <img class="success-bunny" src="{{ url_for('static', filename='images/rabbit.png') }}" alt="MozhiMate bunny mascot">
+        <p class="eyebrow">{{ action_label }}</p>
+        <h1>MozhiMate</h1>
+        <p class="muted">Opening your home dashboard...</p>
+        <div class="success-loader">
+            <span></span><span></span><span></span>
+        </div>
+    </div>
+</section>
+{% endblock %}
+{% block scripts %}
+<script>
+window.setTimeout(function () {
+    window.location.href = {{ url_for('main.dashboard')|tojson }};
+}, 100);
+</script>
+{% endblock %}

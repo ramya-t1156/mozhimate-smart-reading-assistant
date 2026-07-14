@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}Dashboard | MozhiMate{% endblock %}
+{% block content %}
+<section class="hero-card dashboard-hero premium-hero">
+    <div class="hero-copy">
+        <p class="eyebrow">Your Learning Workspace</p>
+        <h1>Read smarter, capture faster, and retain more every session.</h1>
+        <p class="lead">MozhiMate helps you turn live reading moments into durable vocabulary progress with instant meaning lookup, revision loops, and clean analytics.</p>
+        <div class="hero-actions">
+            <a class="selector-button" href="{{ url_for('main.start_reading') }}">Start Reading</a>
+            <a class="secondary-link" href="{{ url_for('main.analytics') }}">View Analytics</a>
+        </div>
+    </div>
+    <div class="hero-side-stack">
+        <div class="streak-card">
+            <span class="streak-label">Current Streak</span>
+            <strong>{{ streak }} day{% if streak != 1 %}s{% endif %}</strong>
+        </div>
+        <div class="hero-mini-grid">
+            <div class="hero-mini-card">
+                <span>Total Words</span>
+                <strong>{{ analytics.total_words }}</strong>
+            </div>
+            <div class="hero-mini-card">
+                <span>Accuracy</span>
+                <strong>{{ analytics.quiz_accuracy }}%</strong>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="card-grid feature-grid premium-feature-grid">
+    <article class="feature-card premium-card">
+        <div class="card-icon-wrap card-icon-image-wrap">
+            <img class="card-icon-image" src="{{ url_for('static', filename='images/reading.png') }}" alt="Start Reading icon">
+        </div>
+        <h2>Start Reading</h2>
+        <p>Choose the mode that fits your reading flow and capture unfamiliar words without leaving the moment.</p>
+        <div class="mode-badge-row">
+            <span class="mini-mode-badge"><img src="{{ url_for('static', filename='images/text.png') }}" alt="Text"></span>
+            <span class="mini-mode-badge"><img src="{{ url_for('static', filename='images/mic.png') }}" alt="Speech"></span>
+            <span class="mini-mode-badge"><img src="{{ url_for('static', filename='images/camera.png') }}" alt="Image"></span>
+            <span class="mini-mode-badge"><img src="{{ url_for('static', filename='images/pdf.png') }}" alt="PDF"></span>
+        </div>
+        <a href="{{ url_for('main.start_reading') }}">Open Modes</a>
+    </article>
+    <article class="feature-card premium-card">
+        <div class="card-icon-wrap card-icon-image-wrap">
+            <img class="card-icon-image" src="{{ url_for('static', filename='images/revision.png') }}" alt="Revision icon">
+        </div>
+        <h2>Revision</h2>
+        <p>Revisit recent words, remove noise, and focus only on the vocabulary that still needs reinforcement.</p>
+        <a href="{{ url_for('main.revision') }}">Practice Now</a>
+    </article>
+    <article class="feature-card premium-card">
+        <div class="card-icon-wrap card-icon-image-wrap">
+            <img class="card-icon-image" src="{{ url_for('static', filename='images/analysis.png') }}" alt="Analytics icon">
+        </div>
+        <h2>Analytics</h2>
+        <p>Track progress, spot hard words, and get a clear view of how your learning habit is evolving.</p>
+        <a href="{{ url_for('main.analytics') }}">View Insights</a>
+    </article>
+    <article class="feature-card premium-card">
+        <div class="card-icon-wrap card-icon-image-wrap">
+            <img class="card-icon-image" src="{{ url_for('static', filename='images/profile.png') }}" alt="Profile icon">
+        </div>
+        <h2>Profile</h2>
+        <p>Manage your account, keep your streak visible, and update your password from one clean space.</p>
+        <a href="{{ url_for('main.profile') }}">Open Profile</a>
+    </article>
+</section>
+
+<section class="stats-grid premium-stats-grid">
+    <div class="stat-card premium-stat-card"><span>Total Words</span><strong>{{ analytics.total_words }}</strong></div>
+    <div class="stat-card premium-stat-card"><span>Quiz Accuracy</span><strong>{{ analytics.quiz_accuracy }}%</strong></div>
+    <div class="stat-card premium-stat-card"><span>Mastered Words</span><strong>{{ analytics.mastered_words }}</strong></div>
+    <div class="stat-card premium-stat-card"><span>Time Spent</span><strong>{{ analytics.time_spent_minutes }} min</strong></div>
+</section>
+{% endblock %}

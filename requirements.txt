@@ -1,0 +1,13 @@
+Flask
+pymongo
+bcrypt
+requests
+nltk
+opencv-python
+pytesseract
+SpeechRecognition
+
+PyMuPDF
+tensorflow
+SpeechRecognition
+

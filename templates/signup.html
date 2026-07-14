@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Signup | MozhiMate{% endblock %}
+{% block content %}
+<section class="auth-layout premium-auth-layout">
+    <div class="auth-card premium-auth-card auth-brand-card">
+        <div class="auth-brand-head">
+            <img class="auth-brand-bunny" src="{{ url_for('static', filename='images/logo.png') }}" alt="MozhiMate bunny">
+            <div>
+                <p class="eyebrow">Create Account</p>
+                <h1>MozhiMate</h1>
+            </div>
+        </div>
+        <form method="post" class="auth-form">
+            <input type="text" name="name" placeholder="Name" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button type="submit">Sign Up</button>
+        </form>
+        <p class="muted">Already registered? <a class="inline-accent-link" href="{{ url_for('auth.login') }}">Login</a></p>
+    </div>
+</section>
+{% endblock %}

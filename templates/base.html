@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}MozhiMate{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="page-glow page-glow-one"></div>
+    <div class="page-glow page-glow-two"></div>
+    <div class="app-shell">
+        {% if g.user %}
+        <header class="site-header site-header-rich">
+            <div class="brand-block">
+                <a class="brand brand-logo" href="{{ url_for('main.dashboard') }}">
+                    <span class="brand-mark brand-mark-image">
+                        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="MozhiMate logo">
+                    </span>
+                    <span class="brand-text">MozhiMate</span>
+                </a>
+            </div>
+            <div class="header-side">
+                <div class="user-chip">Welcome back, {{ g.user.name }}</div>
+                <nav class="nav-links">
+                    <a class="nav-pill {% if request.endpoint == 'main.start_reading' or request.endpoint == 'main.text_mode_page' or request.endpoint == 'main.speech_mode_page' or request.endpoint == 'main.image_mode_page' or request.endpoint == 'main.pdf_mode_page' %}active{% endif %}" href="{{ url_for('main.start_reading') }}">Start Reading</a>
+                    <a class="nav-pill {% if request.endpoint == 'main.revision' or request.endpoint == 'main.revision_quiz' or request.endpoint == 'main.revision_delete_word' %}active{% endif %}" href="{{ url_for('main.revision') }}">Revision</a>
+                    <a class="nav-pill {% if request.endpoint == 'main.analytics' %}active{% endif %}" href="{{ url_for('main.analytics') }}">Analytics</a>
+                    <a class="nav-pill {% if request.endpoint == 'main.profile' %}active{% endif %}" href="{{ url_for('main.profile') }}">Profile</a>
+                    <a class="nav-pill logout-pill" href="{{ url_for('auth.logout') }}">Logout</a>
+                </nav>
+            </div>
+        </header>
+        {% endif %}
+
+        <main class="page-content">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="flash-stack">
+                        {% for category, message in messages %}
+                            <div class="flash {{ category }}">{{ message }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+            {% block content %}{% endblock %}
+        </main>
+
+        <footer class="site-footer">
+            <div>
+                <strong>MozhiMate</strong>
+            </div>
+            <p class="muted">Copyrights @ Ramya</p>
+        </footer>
+    </div>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

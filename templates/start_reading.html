@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Start Reading | MozhiMate{% endblock %}
+{% block content %}
+<section class="reading-hero premium-page-hero compact-hero compact-copy-hero">
+    <div>
+        <h1>Start Reading</h1>
+    </div>
+    <a class="back-link attractive-back-link" href="{{ url_for('main.dashboard') }}"><span class="back-icon" aria-hidden="true">&#8592;</span><span>Dashboard</span></a>
+</section>
+
+<section class="mode-selection-grid premium-mode-grid four-mode-grid">
+    <article class="selector-card premium-selector-card">
+        <div class="selector-icon premium-icon selector-icon-image-wrap">
+            <img class="selector-icon-image" src="{{ url_for('static', filename='images/text.png') }}" alt="Text Mode icon">
+        </div>
+        <div>
+            <h2>Text Mode</h2>
+            <p>Type a word manually and get instant meaning, example, synonyms, and pronunciation support.</p>
+        </div>
+        <a class="selector-button" href="{{ url_for('main.text_mode_page') }}">Start Mode</a>
+    </article>
+    <article class="selector-card premium-selector-card">
+        <div class="selector-icon premium-icon selector-icon-image-wrap">
+            <img class="selector-icon-image" src="{{ url_for('static', filename='images/mic.png') }}" alt="Speech Mode icon">
+        </div>
+        <div>
+            <h2>Speech Mode</h2>
+            <p>Capture spoken words live, filter the noise, and surface helpful vocabulary continuously.</p>
+        </div>
+        <a class="selector-button" href="{{ url_for('main.speech_mode_page') }}">Start Mode</a>
+    </article>
+    <article class="selector-card premium-selector-card">
+        <div class="selector-icon premium-icon selector-icon-image-wrap">
+            <img class="selector-icon-image" src="{{ url_for('static', filename='images/camera.png') }}" alt="Image Mode icon">
+        </div>
+        <div>
+            <h2>Image Mode</h2>
+            <p>Upload an image, extract text with OCR, and inspect interesting words one click at a time.</p>
+        </div>
+        <a class="selector-button" href="{{ url_for('main.image_mode_page') }}">Start Mode</a>
+    </article>
+    <article class="selector-card premium-selector-card">
+        <div class="selector-icon premium-icon selector-icon-image-wrap">
+            <img class="selector-icon-image" src="{{ url_for('static', filename='images/pdf.png') }}" alt="PDF Mode icon">
+        </div>
+        <div>
+            <h2>PDF Mode</h2>
+            <p>Analyze long-form documents, highlight useful words, and save them directly into revision flow.</p>
+        </div>
+        <a class="selector-button" href="{{ url_for('main.pdf_mode_page') }}">Start Mode</a>
+    </article>
+</section>
+{% endblock %}

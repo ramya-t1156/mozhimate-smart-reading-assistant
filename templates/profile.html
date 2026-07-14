@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Profile | MozhiMate{% endblock %}
+{% block content %}
+<section class="page-header premium-page-hero compact-hero compact-copy-hero">
+    <div>
+        <h1 class="page-title-small">Your Profile</h1>
+    </div>
+</section>
+
+<section class="card-grid premium-feature-grid profile-grid">
+    <article class="feature-card premium-card">
+        <div class="card-icon-wrap">Nm</div>
+        <h2>Name</h2>
+        <p>{{ g.user.name }}</p>
+    </article>
+    <article class="feature-card premium-card">
+        <div class="card-icon-wrap">@</div>
+        <h2>Email</h2>
+        <p>{{ g.user.email }}</p>
+    </article>
+    <article class="feature-card premium-card">
+        <div class="card-icon-wrap">St</div>
+        <h2>Current Streak</h2>
+        <p>{{ streak }} Day Streak</p>
+    </article>
+    <article class="feature-card premium-card">
+        <div class="card-icon-wrap">In</div>
+        <h2>Joined</h2>
+        <p>{{ g.user.created_at.strftime('%d %b %Y') if g.user.created_at else 'Recently' }}</p>
+    </article>
+</section>
+
+<section class="panel password-panel premium-panel">
+    <div class="panel-heading">
+        <div>
+            <h2>Edit Password</h2>
+        </div>
+    </div>
+    <form method="post" class="password-form premium-password-form">
+        <input type="password" name="current_password" placeholder="Current password" required>
+        <input type="password" name="new_password" placeholder="New password" required>
+        <input type="password" name="confirm_password" placeholder="Confirm new password" required>
+        <button type="submit">Update Password</button>
+    </form>
+</section>
+{% endblock %}

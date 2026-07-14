@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Image Mode | MozhiMate{% endblock %}
+{% block content %}
+<section class="mode-page">
+    <div class="mode-page-header premium-page-hero compact-hero compact-copy-hero">
+        <a class="back-link attractive-back-link" href="{{ url_for('main.start_reading') }}"><span class="back-icon" aria-hidden="true">&#8592;</span><span>All Modes</span></a>
+        <div>
+            <p class="eyebrow">Image Mode</p>
+            <h1>Image OCR</h1>
+        </div>
+    </div>
+
+    <section class="focus-panel premium-mode-layout mode-two-column">
+        <div class="mode-control-panel premium-control-panel">
+            <div class="panel-heading compact-heading">
+                <h2>Control Panel</h2>
+            </div>
+            <div class="upload-toolbar premium-upload-toolbar">
+                <input id="image-input" type="file" accept="image/*">
+                <button type="button" data-action="image-process">Upload Image</button>
+            </div>
+            <div id="image-result" class="result-surface premium-result-area">
+                <p class="muted">Extracted text and clickable words will appear here.</p>
+            </div>
+        </div>
+
+        <aside class="meaning-side-panel premium-results-panel">
+            <div class="panel-heading compact-heading">
+                <h2>Meaning Panel</h2>
+            </div>
+            <div id="word-popup" class="popup-card premium-popup-card">
+                <p class="muted">Click an extracted word to view its meaning here.</p>
+            </div>
+        </aside>
+    </section>
+</section>
+{% endblock %}
+

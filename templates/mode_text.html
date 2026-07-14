@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Text Mode | MozhiMate{% endblock %}
+{% block content %}
+<section class="mode-page mode-page-text">
+    <div class="mode-page-header premium-page-hero compact-hero compact-copy-hero">
+        <a class="back-link attractive-back-link" href="{{ url_for('main.start_reading') }}"><span class="back-icon" aria-hidden="true">&#8592;</span><span>All Modes</span></a>
+        <div>
+            <p class="eyebrow">Text Mode</p>
+            <h1>Find Meaning</h1>
+        </div>
+    </div>
+
+    <section class="focus-panel premium-mode-layout mode-two-column">
+        <div class="mode-control-panel premium-control-panel">
+            <div class="panel-heading compact-heading">
+                <h2>Control Panel</h2>
+            </div>
+            <div class="lookup-shell full-width-shell">
+                <input id="text-word" class="hero-input" type="text" placeholder="Type an unfamiliar word">
+                <div class="button-row">
+                    <button type="button" data-action="text-lookup">Find Meaning</button>
+                    <button type="button" class="ghost" data-action="pronounce-word">Pronounce</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="mode-results-panel premium-results-panel">
+            <div class="panel-heading compact-heading">
+                <h2>Meaning Result</h2>
+            </div>
+            <div id="text-result" class="result-surface large-result premium-result-area">
+                <p class="muted">Meaning, synonyms, and an example sentence will appear here.</p>
+            </div>
+        </div>
+    </section>
+</section>
+{% endblock %}
+

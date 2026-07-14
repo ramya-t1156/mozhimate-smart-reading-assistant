@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}Speech Mode | MozhiMate{% endblock %}
+{% block content %}
+<section class="mode-page speech-mode-shell">
+    <div class="mode-page-header premium-page-hero compact-hero compact-copy-hero">
+        <a class="back-link attractive-back-link" href="{{ url_for('main.start_reading') }}"><span class="back-icon" aria-hidden="true">&#8592;</span><span>All Modes</span></a>
+        <div>
+            <p class="eyebrow">Speech Mode</p>
+            <h1>Live Speech</h1>
+        </div>
+    </div>
+
+    <section class="focus-panel speech-layout premium-mode-layout">
+        <div class="speech-control-panel premium-control-panel">
+            <div class="mic-panel premium-mic-panel">
+                <div id="speech-mic" class="mic-orb"></div>
+                <div id="speech-live-badge" class="chip">Idle</div>
+                <p id="speech-status" class="muted">Press Start Reading and allow microphone access.</p>
+                <div class="button-row centered-row">
+                    <button id="speech-start-btn" type="button" data-action="speech-start">Start Reading</button>
+                    <button id="speech-stop-btn" type="button" class="ghost" data-action="speech-stop">Stop Reading</button>
+                </div>
+            </div>
+
+            <section class="speech-transcript-box premium-transcript-box">
+                <div class="panel-heading compact-heading">
+                    <h2>Live Transcript</h2>
+                    <div id="speech-loading" class="chip hidden">Fetching meanings...</div>
+                </div>
+                <textarea id="speech-transcript-live" class="transcript-stream transcript-area" rows="8" readonly placeholder="Your full transcript will appear here once you start speaking."></textarea>
+                <div class="speech-current-box">
+                    <span class="muted">Current phrase</span>
+                    <div id="speech-interim-live" class="speech-interim-line">Waiting for live speech...</div>
+                </div>
+            </section>
+        </div>
+
+        <div class="speech-insights-panel premium-results-panel">
+            <section class="live-detected-panel speech-card-stack premium-detected-panel">
+                <div class="panel-heading compact-heading">
+                    <h2>Detected Words</h2>
+                    <span class="muted">Newest completed word appears first.</span>
+                </div>
+                <div id="speech-live-words" class="chip-cloud">
+                    <p class="muted">No words detected yet.</p>
+                </div>
+            </section>
+
+            <section id="speech-result" class="result-surface speech-meaning-surface premium-result-area">
+                <p class="muted">Meaning cards will appear here while you speak.</p>
+            </section>
+        </div>
+    </section>
+</section>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/speech.js') }}"></script>
+{% endblock %}
+

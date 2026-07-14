@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block title %}Revision | MozhiMate{% endblock %}
+{% block content %}
+<section class="page-header premium-page-hero compact-hero compact-copy-hero">
+    <div>
+        <h1 class="page-title-small">Revision</h1>
+    </div>
+</section>
+
+<section class="revision-actions premium-action-row">
+    <button type="button" class="toggle-button {% if active_view != 'quiz' %}active-toggle{% endif %}" data-toggle-target="recent-words-panel">Revise the Words</button>
+    <button type="button" class="toggle-button {% if active_view == 'quiz' %}active-toggle{% endif %}" data-toggle-target="quiz-panel">Start Quiz</button>
+</section>
+
+<section class="revision-layout single-focus-layout" data-revision-layout data-active-view="{{ active_view }}">
+    <div id="recent-words-panel" class="panel premium-panel {% if active_view == 'quiz' %}hidden-block{% endif %}">
+        <div class="panel-heading compact-heading">
+            <h2>Recent Words</h2>
+            <span class="muted">Review or remove noisy entries</span>
+        </div>
+        {% if words %}
+            <div class="word-list">
+                {% for word in words %}
+                <article class="word-item premium-word-item">
+                    <div class="panel-heading compact-heading">
+                        <h3>{{ word.word }}</h3>
+                        <form method="post" action="{{ url_for('main.revision_delete_word') }}" onsubmit="return confirm('Delete this word from your revision list?');">
+                            <input type="hidden" name="word_id" value="{{ word._id }}">
+                            <input type="hidden" name="active_view" value="words">
+                            <button type="submit" class="ghost">Delete</button>
+                        </form>
+                    </div>
+                    <p>{{ word.meaning }}</p>
+                    <small>{{ word.difficulty_level or "Medium" }} | Forgetting probability: {{ word.forgetting_probability or 0.5 }}</small>
+                </article>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="muted">No recent words yet. Start a reading session first.</p>
+        {% endif %}
+    </div>
+
+    <div id="quiz-panel" class="panel premium-panel quiz-shell {% if active_view != 'quiz' %}hidden-block{% endif %}">
+        <div class="quiz-shell-header">
+            <div>
+                <h2>Quiz Mode</h2>
+                <p class="muted">Choose the correct meaning for each word.</p>
+            </div>
+            <div class="quiz-summary-chip-row">
+                <span class="chip quiz-score-chip">Score {{ quiz_state.correct }}/{{ quiz_state.answered }}</span>
+                <a class="ghost retake-link" href="{{ url_for('main.revision', view='quiz', reset_quiz=1) }}">Retake Quiz</a>
+            </div>
+        </div>
+
+        {% if quiz_feedback %}
+        <section class="quiz-feedback-card {% if quiz_feedback.is_correct %}quiz-feedback-success{% else %}quiz-feedback-error{% endif %}">
+            <div class="quiz-feedback-head">
+                <h3>{{ 'Correct Answer' if quiz_feedback.is_correct else 'Incorrect Answer' }}</h3>
+                <span class="chip">Score {{ quiz_feedback.correct }}/{{ quiz_feedback.answered }}</span>
+            </div>
+            <p><strong>{{ quiz_feedback.word }}</strong></p>
+            <p>Your answer: {{ quiz_feedback.selected }}</p>
+            {% if not quiz_feedback.is_correct %}
+            <p>Correct meaning: {{ quiz_feedback.expected }}</p>
+            {% endif %}
+        </section>
+        {% endif %}
+
+        {% if quiz %}
+            <div class="quiz-card-stack premium-quiz-stack">
+            {% for item in quiz %}
+            <form method="post" action="{{ url_for('main.revision_quiz') }}" class="quiz-card premium-quiz-card modern-quiz-card">
+                <input type="hidden" name="word_id" value="{{ item.word._id }}">
+                <input type="hidden" name="word" value="{{ item.word.word }}">
+                <input type="hidden" name="expected_meaning" value="{{ item.word.meaning }}">
+                <div class="quiz-question-head">
+                    <span class="chip">Question {{ loop.index }}</span>
+                    <strong class="quiz-word-title">{{ item.word.word }}</strong>
+                </div>
+                <div class="quiz-options-grid">
+                {% for option in item.options %}
+                <label class="quiz-option modern-quiz-option">
+                    <input type="radio" name="selected_meaning" value="{{ option }}" required>
+                    <span class="quiz-option-indicator"></span>
+                    <span class="quiz-option-copy">{{ option }}</span>
+                </label>
+                {% endfor %}
+                </div>
+                <button type="submit" class="quiz-submit-button">Submit Answer</button>
+            </form>
+            {% endfor %}
+            </div>
+        {% else %}
+            <p class="muted">Quiz mode will appear after a few words have been saved.</p>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
