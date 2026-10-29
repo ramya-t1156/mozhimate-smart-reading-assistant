@@ -22,10 +22,6 @@ While reading books, articles, or documents, learners often come across unfamili
 
 <img width="475" height="392" alt="image" src="https://github.com/user-attachments/assets/a5029707-0250-40ba-916a-d2824c15d060" />
 
-### Start Reading Page
-
-![Start Reading Page](screenshots/reading.png)
-
 ### Speech Mode Page
 
 <img width="482" height="234" alt="image" src="https://github.com/user-attachments/assets/e82004f4-095d-4c0f-9d3b-b2325c122172" />
@@ -34,7 +30,6 @@ While reading books, articles, or documents, learners often come across unfamili
 
 <img width="482" height="321" alt="image" src="https://github.com/user-attachments/assets/acafab4c-093d-473f-8bd3-02cb1b4bc3dc" />
 
-> **Note:** Add your actual screenshots to the `screenshots` folder using the filenames shown above.
 
 ## Technologies Used
 
