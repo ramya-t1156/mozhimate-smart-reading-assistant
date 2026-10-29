@@ -38,7 +38,7 @@ While reading books, articles, or documents, learners often come across unfamili
 - **Database:** MongoDB
 - **NLP:** NLTK, WordNet
 - **Computer Vision and OCR:** OpenCV, Tesseract OCR
-- **Deep Learning:** TensorFlow / Keras, if used in the implemented scoring flow
+- - **Deep Learning:** TensorFlow 
 
 ## Setup
 
