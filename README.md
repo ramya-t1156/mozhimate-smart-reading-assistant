@@ -92,7 +92,7 @@ Configure the following environment variables if required:
 - Image Mode requires OpenCV and Tesseract OCR.
 - PDF Mode requires PyMuPDF.
 - Pronunciation uses `pyttsx3` and may require local audio support.
-- Speech Mode depends on the speech-processing functionality currently implemented in the application.
+- Speech Mode currently supports transcript processing; microphone input may require additional implementation.
 
 ## Contact
 
